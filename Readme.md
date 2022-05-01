@@ -25,7 +25,7 @@ allprojects {
 Step 2. Add the dependency
 ```
 dependencies {
-		implementation 'com.github.SagunDevkota:JLaTexMath-KaTex:0.0.0'
+		implementation 'com.github.SagunDevkota:JLaTexMath-KaTex:1.0.0'
 	}
 ```
 

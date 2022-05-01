@@ -9,7 +9,7 @@
 
     <com.sd2.katex_android.RenderLatex
         android:id="@+id/latex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:background="@color/white"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
 </LinearLayout>

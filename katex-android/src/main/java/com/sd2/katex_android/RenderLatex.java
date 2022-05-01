@@ -3,34 +3,71 @@ package com.sd2.katex_android;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-public class RenderLatex extends LinearLayout {
+import java.io.File;
 
-    private TypedArray attributes;
-    private WebView webView;
-    @SuppressLint("SetJavaScriptEnabled")
-    public RenderLatex(Context context, @Nullable AttributeSet attrs) {
+public class RenderLatex extends WebView {
+
+    private String text;
+
+    public RenderLatex(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public RenderLatex(Context context, AttributeSet attrs) {
         super(context, attrs);
-        inflate(context,R.layout.render_latex,this);
-        webView = findViewById(R.id.webView);
-        webView.setWebViewClient(new WebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-        attributes = context.obtainStyledAttributes(attrs,R.styleable.RenderLatex);
-        setText(attributes.getString(R.styleable.RenderLatex_LaTex));
+        init(context);
     }
 
-    public void setText(WebView webView, String latex){
-        Log.d("TAG", "setTextRenderLatex: "+latex);
-        webView.loadData(LaTexParser.getHtml(latex), "text/html", "UTF-8");
+    @SuppressLint("SetJavaScriptEnabled")
+    private void init(Context context) {
+//        setBackgroundColor(Color.TRANSPARENT);
+        this.text = "";
+
+        // enable javascript
+        getSettings().setLoadWithOverviewMode(true);
+        getSettings().setJavaScriptEnabled(true);
+        getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
+        // disable click
+        setClickable(false);
+        setLongClickable(false);
+        getSettings().setUseWideViewPort(true);
+        setWebViewClient(new WebViewClient());
     }
-    public void setText(String latex){
-        webView.loadData(LaTexParser.getHtml(latex),"text/html","UTF-8");
+
+    public void setText(String text) {
+        loadData(LaTexParser.getHtml(text),"text/html","UTF-8");
+    }
+
+    public String getText() {
+        return text.substring(1, text.length() - 1);
+    }
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public void setOnTouchListener(OnTouchListener l) {
+        super.setOnTouchListener(l);
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(l);
     }
 }
